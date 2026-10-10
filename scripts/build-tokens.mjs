@@ -10,7 +10,7 @@
 // A site imports one or the other, never both. They can't be one file: a
 // Tailwind @theme variable and a :root variable of the same name would have
 // to reference each other.
-import { mkdirSync, writeFileSync, copyFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync, copyFileSync } from "node:fs";
 import { join } from "node:path";
 import { ROOT, loadTokens, deriveTones } from "./lib.mjs";
 
@@ -83,9 +83,9 @@ const toneSurface = `@layer base {\n  [data-tone] {\n    background-color: var(-
 const layered = (...blocks) => `@layer theme {\n${blocks.map(indent).join("\n\n")}\n}`;
 
 // The plain build has no Tailwind to establish the layer order, so it states
-// it: theme first, base after.
+// it, in the order Tailwind uses: theme, base, components.
 const tokensCss = `${HEADER}
-@layer theme, base;
+@layer theme, base, components;
 
 ${layered(`:root {\n${[...themed, ...plain].join("\n")}\n}`, toneVars)}
 
@@ -130,10 +130,23 @@ ${layered(`:root {\n${plain.join("\n")}\n}`, toneVars)}
 ${toneSurface}
 `;
 
+// Buttons take a tone's surface and text colour as a pair, by name
+// (data-variant), without becoming that tone themselves — see Button.tsx.
+// Generated here so a new tone is a new button variant with no second edit.
+const variantCss = `@layer components {\n${Object.entries(tones)
+  .map(([name, t]) => `  :is(.ds-button, .ds-icon-button)[data-variant="${name}"] {\n    --ds-variant-bg: ${t.bg};\n    --ds-variant-fg: ${t.fg};\n  }`)
+  .join("\n\n")}\n}`;
+
+const componentsCss = `${HEADER}
+${variantCss}
+
+${readFileSync(join(ROOT, "css", "components.css"), "utf8").replace(/\r\n/g, "\n")}`;
+
 const dist = join(ROOT, "dist");
 mkdirSync(dist, { recursive: true });
 writeFileSync(join(dist, "tokens.css"), tokensCss);
 writeFileSync(join(dist, "theme.css"), themeCss);
+writeFileSync(join(dist, "components.css"), componentsCss);
 copyFileSync(join(ROOT, "tokens", "tokens.json"), join(dist, "tokens.json"));
 writeFileSync(join(dist, "tones.json"), JSON.stringify(tones, null, 2) + "\n");
 

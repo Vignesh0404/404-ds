@@ -7,7 +7,7 @@ Brand rules and how to use the tokens: [DESIGN.md](DESIGN.md).
 ## Install
 
 ```sh
-npm install github:Vignesh0404/404-ds#v0.2.0
+npm install github:Vignesh0404/404-ds#v0.3.0
 ```
 
 npm 12 refuses git dependencies unless a project opts in. Each site needs this line in an `.npmrc` at its root, committed:
@@ -21,7 +21,7 @@ The package is built when npm fetches it, so there is nothing to publish. npm pr
 To move a site to a newer version, the bump itself needs a wider setting, once, on the command line:
 
 ```sh
-npm install --allow-git=all github:Vignesh0404/404-ds#v0.2.0
+npm install --allow-git=all github:Vignesh0404/404-ds#v0.3.0
 ```
 
 With `allow-git=root`, npm installs from the lockfile without complaint (which is all a deploy does) but refuses to change a git dependency that is already locked. Keep `root` in the committed `.npmrc`; don't widen it there.
@@ -45,6 +45,20 @@ A plain-CSS site (404games):
 
 Import `theme.css` or `tokens.css`, never both. They carry the same values in two shapes.
 
+Then the components, in either kind of site, after the lines above:
+
+```css
+@import "@the404labs/ds/components.css";
+```
+
+```tsx
+import { Button, IconButton, Sheet, Segmented, Switch, Input, Label } from "@the404labs/ds";
+
+<Button tone="cream" onClick={sayHello}>Say hello</Button>
+<Button as={Link} to="/cart" tone="yellow" block>Checkout</Button>
+<Sheet open={open} onClose={close} title="Your cart" closeLabel="Close cart" tone="green">…</Sheet>
+```
+
 In `vite.config.ts`, add the plugin that applies saved accessibility settings before first paint:
 
 ```ts
@@ -65,12 +79,13 @@ The shared a11y settings are mirrored to a first-party cookie on `.the404labs.co
 | `@the404labs/ds/theme.css` | The same, as a Tailwind v4 `@theme`. |
 | `@the404labs/ds/base.css` | Fonts, page defaults, the focus ring, all `data-a11y-*` rules. |
 | `@the404labs/ds/fonts.css` | Fonts only (already included by `base.css`). |
+| `@the404labs/ds/components.css` | Styles for the components. |
 | `@the404labs/ds` | `normalizeA11ySettings`, `applyA11yToDocument`, `readStoredA11y`, `writeStoredA11y`, `fluidPx`. |
 | `@the404labs/ds/vite` | `ds404()` Vite plugin. |
 | `@the404labs/ds/tokens.json` | Tokens in Design Tokens (DTCG) format. |
 | `@the404labs/ds/tones.json` | The derived tone values. |
 
-Shared React components (Button, Sheet, the accessibility panel, header, footer) arrive in later versions; see [CHANGELOG.md](CHANGELOG.md).
+Still to come: the accessibility panel, the wordmark, and the shared header and footer; see [CHANGELOG.md](CHANGELOG.md).
 
 ## Work on it
 

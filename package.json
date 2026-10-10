@@ -1,21 +1,40 @@
 {
   "name": "@the404labs/ds",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "the404labs design system — tokens, base styles, a11y and shared components for the404labs.co, 404shop and 404games.",
   "type": "module",
   "license": "UNLICENSED",
   "repository": "github:Vignesh0404/404-ds",
-  "sideEffects": ["**/*.css"],
-  "files": ["dist", "css", "fonts", "tokens", "scripts", "src", "tsconfig.json", "DESIGN.md", "CHANGELOG.md"],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "dist",
+    "css",
+    "fonts",
+    "tokens",
+    "scripts",
+    "src",
+    "tsconfig.json",
+    "DESIGN.md",
+    "CHANGELOG.md"
+  ],
   "exports": {
-    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
-    "./vite": { "types": "./dist/vite.d.ts", "default": "./dist/vite.js" },
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./vite": {
+      "types": "./dist/vite.d.ts",
+      "default": "./dist/vite.js"
+    },
     "./tokens.css": "./dist/tokens.css",
     "./theme.css": "./dist/theme.css",
     "./base.css": "./css/base.css",
     "./fonts.css": "./css/fonts.css",
     "./tokens.json": "./dist/tokens.json",
-    "./tones.json": "./dist/tones.json"
+    "./tones.json": "./dist/tones.json",
+    "./components.css": "./dist/components.css"
   },
   "scripts": {
     "dev": "npm run build:tokens && vite",
@@ -31,14 +50,19 @@
     "@fontsource/tilt-warp": "^5.2.8"
   },
   "peerDependencies": {
+    "react": ">=19",
     "vite": ">=7"
   },
   "peerDependenciesMeta": {
-    "vite": { "optional": true }
+    "vite": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@types/node": "^24.13.3",
+    "@types/react": "^19.3.0",
     "oxlint": "^1.82.0",
+    "react": "^19.3.0",
     "typescript": "~6.0.2",
     "vite": "^8.2.2"
   }

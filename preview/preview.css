@@ -2,6 +2,7 @@
    reads the same tokens a site would, so it doubles as a smoke test. */
 @import "../dist/tokens.css";
 @import "../css/base.css";
+@import "../dist/components.css";
 
 main {
   max-width: var(--container-page);

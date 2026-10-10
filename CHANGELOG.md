@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.3.0
+
+Shared components. Import `@the404labs/ds/components.css` once, then the components from `@the404labs/ds`. React 19 is now a peer dependency.
+
+- `Button`: one variant per tone plus `ghost`; `size="sm"`, `block`; `as` renders it as a link or a router's `Link`.
+- `IconButton`: 40px round button, `label` required.
+- `Sheet`: 404games' implementation (it had the focus fix and `onCloseAutoFocus`), with any dark tone.
+- `Segmented`, `Switch`, `Input`, `Textarea`, `Label`, `Eyebrow`; classes `ds-field` and `ds-label` for markup that can't use the components.
+- Hover styles apply only where a pointer can hover, so a tapped button doesn't stay flipped on a phone.
+- The chosen segmented option and the switch read the tone (surface flipped; accent track), replacing hard-coded yellow and green.
+
 ## 0.2.0
 
 - Tone utilities for Tailwind sites, in `theme.css`: `bg-tone`, `text-on-tone`, `text-on-tone-muted`, `text-tone-accent`, `bg-tone-hover`, `border-tone-border`, `border-tone-border-strong`, `bg-tone-field`, `outline-tone-focus`. Each follows the nearest `data-tone`. `bg-on-tone` with `text-tone` is the button flip.

@@ -1,0 +1,380 @@
+/* Styles for the shared components. Plain CSS on purpose: 404games has no
+   Tailwind, and a site that does can't scan class names inside node_modules
+   without extra wiring. Every colour here is a --tone-* variable, so a
+   component takes on whatever surface it is placed on.
+
+   Everything sits in @layer components — the layer Tailwind uses for its own
+   component classes — so a utility on the same element (className="w-full")
+   wins, and so does any unlayered rule in a plain-CSS site.
+
+   scripts/build-tokens.mjs prepends the per-variant colour pairs for buttons
+   (generated from the tones) and writes the result to dist/components.css. */
+@layer components {
+  /* ------------------------------------------------------------- Button
+     One button for the family. Outlined in the text colour of the surface it
+     sits on — not its own — which keeps the outline visible whichever way the
+     button is flipped. Fill and label trade colours on hover and focus. */
+  .ds-button,
+  .ds-icon-button {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    border: var(--border-control) solid var(--tone-fg);
+    border-radius: var(--radius-pill);
+    background: var(--ds-variant-bg);
+    color: var(--ds-variant-fg);
+    font-family: var(--font-brand);
+    font-weight: 400;
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+      background-color var(--motion-instant) var(--motion-ease-out),
+      color var(--motion-instant) var(--motion-ease-out),
+      transform var(--motion-instant) var(--motion-ease-out);
+  }
+
+  .ds-button {
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    text-align: center;
+  }
+
+  @media (min-width: 640px) {
+    .ds-button {
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      line-height: 1.5rem;
+    }
+  }
+
+  .ds-button[data-size="sm"] {
+    padding: 0.5rem 1rem;
+    font-size: 0.8125rem;
+    line-height: 1.25rem;
+  }
+
+  .ds-button[data-block] {
+    display: flex;
+    width: 100%;
+  }
+
+  /* Hover only where there is a pointer that hovers. On a touch screen
+     :hover sticks after a tap, which would leave a tapped button flipped
+     until something else is touched. */
+  @media (hover: hover) {
+    :is(.ds-button, .ds-icon-button):hover {
+      background: var(--ds-variant-fg);
+      color: var(--ds-variant-bg);
+    }
+  }
+
+  :is(.ds-button, .ds-icon-button):focus-visible {
+    background: var(--ds-variant-fg);
+    color: var(--ds-variant-bg);
+  }
+
+  :is(.ds-button, .ds-icon-button):active {
+    transform: scale(var(--motion-press));
+  }
+
+  :is(.ds-button, .ds-icon-button):is(:disabled, [aria-disabled="true"]) {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  /* -------------------------------------------------------- Icon button */
+  .ds-icon-button {
+    position: relative;
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+  }
+
+  .ds-icon-button svg {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+
+  .ds-icon-button[data-size="sm"] {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .ds-icon-button[data-size="xs"] {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .ds-icon-button:is([data-size="sm"], [data-size="xs"]) svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  /* Ghost: no fill of its own, for controls inside a toned panel (a sheet's
+     close button, a row's secondary action). It flips to the panel's own
+     text colour. */
+  :is(.ds-button, .ds-icon-button)[data-variant="ghost"] {
+    --ds-variant-bg: transparent;
+    --ds-variant-fg: var(--tone-fg);
+    border-width: 1px;
+    border-color: var(--tone-border-strong);
+  }
+
+  @media (hover: hover) {
+    :is(.ds-button, .ds-icon-button)[data-variant="ghost"]:hover {
+      background: var(--tone-fg);
+      color: var(--tone-bg);
+    }
+  }
+
+  :is(.ds-button, .ds-icon-button)[data-variant="ghost"]:focus-visible {
+    background: var(--tone-fg);
+    color: var(--tone-bg);
+  }
+
+  /* -------------------------------------------------------------- Field
+     A card, not a pill — a deliberate contrast with the buttons beside it.
+     The fill is a shade darker than the surface so text keeps its contrast. */
+  .ds-field {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    border: 1px solid var(--tone-border-strong);
+    border-radius: var(--radius-card);
+    background: var(--tone-field);
+    color: var(--tone-fg);
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    transition: border-color var(--motion-fast) var(--motion-ease-out);
+  }
+
+  .ds-field::placeholder {
+    color: var(--tone-fg-muted);
+    opacity: 1;
+  }
+
+  .ds-field:focus-visible {
+    border-color: var(--tone-accent);
+  }
+
+  textarea.ds-field {
+    resize: none;
+  }
+
+  .ds-label {
+    display: block;
+    margin-bottom: 0.375rem;
+    font-family: var(--font-brand);
+    font-size: var(--text-label);
+    line-height: 1rem;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-eyebrow);
+    color: var(--tone-fg-muted);
+  }
+
+  /* ---------------------------------------------------------- Segmented */
+  .ds-segmented {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.125rem;
+    padding: 0.25rem;
+    border: 1px solid var(--tone-border-strong);
+    border-radius: var(--radius-pill);
+  }
+
+  .ds-segmented-option {
+    margin: 0;
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: none;
+    color: var(--tone-fg-muted);
+    font-family: var(--font-brand);
+    font-size: 0.75rem;
+    line-height: 1rem;
+    padding: 0.375rem 0.75rem;
+    cursor: pointer;
+    transition:
+      background-color var(--motion-instant) var(--motion-ease-out),
+      color var(--motion-instant) var(--motion-ease-out);
+  }
+
+  @media (hover: hover) {
+    .ds-segmented-option:hover {
+      color: var(--tone-fg);
+    }
+  }
+
+  /* The chosen option is the surface flipped, like a pressed button. */
+  .ds-segmented-option[aria-pressed="true"] {
+    background: var(--tone-fg);
+    color: var(--tone-bg);
+  }
+
+  /* ------------------------------------------------------------- Switch */
+  .ds-switch {
+    box-sizing: border-box;
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    width: 2.75rem;
+    height: 1.5rem;
+    margin: 0;
+    padding: 0.125rem;
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: var(--tone-border-strong);
+    cursor: pointer;
+    transition: background-color var(--motion-fast) var(--motion-ease-out);
+  }
+
+  .ds-switch::after {
+    content: "";
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: var(--radius-pill);
+    background: var(--tone-fg);
+    transition:
+      transform var(--motion-fast) var(--motion-ease-out),
+      background-color var(--motion-fast) var(--motion-ease-out);
+  }
+
+  .ds-switch:is([aria-checked="true"], [aria-pressed="true"], [data-on]) {
+    background: var(--tone-accent);
+  }
+
+  .ds-switch:is([aria-checked="true"], [aria-pressed="true"], [data-on])::after {
+    background: var(--tone-bg);
+    transform: translateX(1.25rem);
+  }
+
+  /* -------------------------------------------------------------- Sheet
+     Bottom sheet on a phone, right-hand side sheet from 768px. A flat block
+     of one tone; everything inside reads that tone. */
+  .ds-sheet-root {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-sheet);
+    pointer-events: none;
+  }
+
+  .ds-sheet-root[data-visible] {
+    pointer-events: auto;
+  }
+
+  .ds-sheet-backdrop {
+    position: absolute;
+    inset: 0;
+    background: color-mix(in srgb, var(--color-ink-soft) 50%, transparent);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    transition: opacity var(--motion-sheet) var(--motion-ease-out);
+  }
+
+  .ds-sheet-root[data-visible] .ds-sheet-backdrop {
+    opacity: 1;
+  }
+
+  .ds-sheet {
+    box-sizing: border-box;
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    max-height: 85dvh;
+    overflow: hidden;
+    border-top: 1px solid var(--tone-border);
+    border-radius: var(--radius-card) var(--radius-card) 0 0;
+    background: var(--tone-bg);
+    color: var(--tone-fg);
+    box-shadow: 0 24px 60px -20px color-mix(in srgb, var(--color-ink-soft) 45%, transparent);
+    transform: translateY(100%);
+    transition: transform var(--motion-sheet) var(--motion-ease-out);
+  }
+
+  .ds-sheet-root[data-visible] .ds-sheet {
+    transform: none;
+  }
+
+  @media (min-width: 768px) {
+    .ds-sheet {
+      inset-inline: auto 0;
+      top: 0;
+      width: min(420px, 92vw);
+      max-height: 100dvh;
+      border-top: 0;
+      border-left: 1px solid var(--tone-border);
+      border-radius: var(--radius-card) 0 0 var(--radius-card);
+      transform: translateX(100%);
+    }
+  }
+
+  .ds-sheet-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 1.5rem 1.25rem 1.25rem;
+  }
+
+  /* 24px, not 20: the accent on green is 4.37:1, which passes only as large
+     text. font-weight is stated because a site without a CSS reset would
+     otherwise bold this h2. */
+  .ds-sheet-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight: 400;
+    color: var(--tone-accent);
+  }
+
+  .ds-sheet-title svg {
+    flex-shrink: 0;
+  }
+
+  .ds-sheet-subtitle {
+    margin: 0.25rem 0 0;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: var(--tone-fg-muted);
+  }
+
+  .ds-sheet-body {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 1.25rem 1.5rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ds-sheet,
+    .ds-sheet-backdrop {
+      transition: none;
+    }
+  }
+}
+
+/* Unlayered on purpose, like the sites' own motion rules: the a11y panel's
+   reduced-motion setting has to win over everything above. */
+html[data-a11y-motion="reduce"] :is(.ds-sheet, .ds-sheet-backdrop, .ds-button, .ds-icon-button, .ds-switch, .ds-switch::after) {
+  transition: none;
+}
