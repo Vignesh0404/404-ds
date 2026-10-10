@@ -7,7 +7,7 @@ Brand rules and how to use the tokens: [DESIGN.md](DESIGN.md).
 ## Install
 
 ```sh
-npm install github:Vignesh0404/404-ds#v0.5.0
+npm install github:Vignesh0404/404-ds#v0.6.0
 ```
 
 npm 12 refuses git dependencies unless a project opts in. Each site needs this line in an `.npmrc` at its root, committed:
@@ -18,13 +18,15 @@ allow-git=root
 
 The package is built when npm fetches it, so there is nothing to publish. npm prints a warning that the package's `prepare` script was blocked for the installed copy; that is expected and harmless, because `dist/` is already there.
 
-To move a site to a newer version, the bump itself needs a wider setting, once, on the command line:
+To move a site to the newest version, run `npm run ds:update` in it (the script is `ds-update`, from this package). It looks up the latest tag and runs:
 
 ```sh
-npm install --allow-git=all github:Vignesh0404/404-ds#v0.5.0
+npm install --allow-git=all github:Vignesh0404/404-ds#vX.Y.Z
 ```
 
-With `allow-git=root`, npm installs from the lockfile without complaint (which is all a deploy does) but refuses to change a git dependency that is already locked. Keep `root` in the committed `.npmrc`; don't widen it there.
+The wider setting is needed for that one command. With `allow-git=root`, npm installs from the lockfile without complaint (which is all a deploy does) but refuses to change a git dependency that is already locked. Keep `root` in the committed `.npmrc`; don't widen it there.
+
+There is no automatic update pull request. Dependabot and similar tools don't follow a git dependency pinned to a tag the way they follow a registry package, so the update is a deliberate command. Publishing this package to npm would change that.
 
 ## Use
 
@@ -113,6 +115,16 @@ import { SiteFooter, SiteHeader, Wordmark } from "@the404labs/ds";
 
 `tone` on the header is the tone of the page beneath it. Pages whose content starts at the top pad by `var(--ds-header-height)`. The logo files for use outside React are in `@the404labs/ds/assets/`.
 
+## Tools for a site
+
+| Script in the site | Runs | Does |
+| --- | --- | --- |
+| `"lint": "oxlint && ds-lint"` | `ds-lint` | Fails on raw colours, opacity text colours, named typefaces and removed focus rings in `src/`. |
+| `"ds:update": "ds-update"` | `ds-update` | Moves the site to the newest tagged version. |
+| `"og": "ds-og 404shop"` | `ds-og` | Copies the site's social card to `public/og-image.png`. |
+
+Copy `skill/SKILL.md` to `.claude/skills/404-ds/SKILL.md` in the site so AI agents working there follow the system.
+
 ## Work on it
 
 ```sh
@@ -120,6 +132,8 @@ npm install
 npm run dev     # preview page at http://127.0.0.1:5180
 npm run build   # tokens → contrast test → TypeScript
 npm run lint
+npm run build:wordmarks   # regenerate the logo drawings (outputs are committed)
+npm run build:og          # re-render the social cards (needs Edge or Chrome; outputs are committed)
 ```
 
 To change a value, edit `tokens/tokens.json`. Everything in `dist/` is generated. The build fails if any tone drops below WCAG AA.

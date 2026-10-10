@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.6.0
+
+The guardrails.
+
+- `ds-lint`: a check for a site's `npm run lint`. Fails on raw colours, text colours made from an opacity, typefaces named directly, and removed focus rings.
+- `ds-update`: moves a site to the newest tag, including the `--allow-git=all` the bump needs.
+- Social cards: one template and `og/cards.json`, rendered by `npm run build:og` into `assets/og-*.png`; `ds-og <site>` copies one into a site. The fonts and colours are read from this package, so nothing is fetched while rendering. The shop's card title now ends in an underscore like the other two (it ended in a full stop).
+- `skill/SKILL.md`: instructions for AI agents working in any of the repos.
+- CI: build (tokens, contrast test, types) and lint on every push and pull request.
+
 ## 0.5.0
 
 The logo and the shared page chrome.

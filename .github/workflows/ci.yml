@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      # The package's own prepare script runs the build; skip it here so the
+      # build step below is the one that reports.
+      - run: npm ci --ignore-scripts
+      # Generates the tokens, runs the contrast test (fails below WCAG AA),
+      # and type-checks the components.
+      - run: npm run build
+      - run: npm run lint

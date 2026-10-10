@@ -25,7 +25,7 @@ Reference we like: [The Funday Press](https://thefundaypress.com/). Three things
 
 ## Logo
 
-There are two marks, and both live in this package as SVG. Do not redraw them or set them in live text.
+There are two marks, and both live in this package as drawings: the `Wordmark` and `Badge` components, and SVG files in `assets/`. Do not redraw them or set them in live text. A logo that depends on a web font shows in the wrong typeface whenever the font is late.
 
 - **Wordmark.** `the404labs` in Lilita One, tight tracking. Sub-brand lockups (`404shop`, `404games`) are drawn the same way.
 - **Badge.** The red circle with "404" in cream and yellow. Used as the favicon and wherever the wordmark won't fit.
@@ -174,8 +174,23 @@ Accessibility is part of the brand, not a compliance layer.
 - One joke per screen, at most. The name is already a joke; it doesn't need help.
 - Button labels say what happens: "Add to cart", "Say hello", "Play". Never "Submit" or "Click here".
 
+## Social cards
+
+One card per site, 1200×630, all from one template: the site's name in Tilt Warp, yellow on red; one line in Lilita One; the address in a cream pill. The words are in `og/cards.json`. Sites copy their card with `npm run og`; they don't keep their own template.
+
 ## For anyone writing code
 
 - Install `@the404labs/ds`. Don't copy a token, a font file or a component out of it or out of another site.
 - No raw colours in UI code: no hex, no `rgb()`, no opacity-modified text colours. Game art drawn on a canvas is exempt.
 - Need something the system lacks? Add it here first, then use it.
+
+## Keeping it this way
+
+The three sites drifted once because nothing stopped them. Four things do now.
+
+- **The contrast test.** `npm run build` in this package fails if any tone's text, muted text, accent or focus ring drops below WCAG AA. A colour change that breaks contrast cannot be released.
+- **`ds-lint`.** Each site's `npm run lint` fails on a raw colour, a text colour made from an opacity, a typeface named directly, or a removed focus ring. Those four are exactly how the sites went wrong before.
+- **CI.** This package and each site run their build and lint on every push and pull request.
+- **The skill.** Each repo carries `.claude/skills/404-ds/SKILL.md` (the source is `skill/SKILL.md` here), which tells an AI agent to use this system and not to port or hard-code. Keep the copies identical to the source.
+
+To move a site to a new version: `npm run ds:update`, read the changelog, build, look at the site, commit.

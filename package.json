@@ -1,6 +1,6 @@
 {
   "name": "@the404labs/ds",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "the404labs design system — tokens, base styles, a11y and shared components for the404labs.co, 404shop and 404games.",
   "type": "module",
   "license": "UNLICENSED",
@@ -18,7 +18,10 @@
     "tsconfig.json",
     "DESIGN.md",
     "CHANGELOG.md",
-    "assets"
+    "assets",
+    "bin",
+    "og",
+    "skill"
   ],
   "exports": {
     ".": {
@@ -45,7 +48,8 @@
     "test:contrast": "node scripts/contrast.mjs",
     "lint": "oxlint",
     "prepare": "npm run build",
-    "build:wordmarks": "node scripts/build-wordmarks.mjs"
+    "build:wordmarks": "node scripts/build-wordmarks.mjs",
+    "build:og": "node scripts/build-og.mjs"
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.8",
@@ -66,8 +70,14 @@
     "@types/react": "^19.3.0",
     "opentype.js": "^2.0.0",
     "oxlint": "^1.82.0",
+    "playwright-core": "^1.64.0",
     "react": "^19.3.0",
     "typescript": "~6.0.2",
     "vite": "^8.2.2"
+  },
+  "bin": {
+    "ds-lint": "./bin/ds-lint.mjs",
+    "ds-update": "./bin/ds-update.mjs",
+    "ds-og": "./bin/ds-og.mjs"
   }
 }
