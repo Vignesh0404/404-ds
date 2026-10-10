@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1
+
+- `base.css` no longer sets `scrollbar-gutter` on `html`. That is layout policy and differs per site: 404games is a full-screen canvas and must not reserve a scrollbar strip.
+
 ## 0.1.0
 
 First version. Foundations only; no site has adopted it yet.

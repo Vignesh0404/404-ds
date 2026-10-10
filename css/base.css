@@ -15,10 +15,9 @@
 @import "./fonts.css";
 
 @layer base {
-  html {
-    scrollbar-gutter: stable;
-  }
-
+  /* Layout policy stays with each site: scrollbar-gutter, #root sizing and
+     overflow differ between a scrolling page (the404labs, 404shop) and a
+     full-screen canvas (404games), so none of that is set here. */
   html,
   body {
     margin: 0;
