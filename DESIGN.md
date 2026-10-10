@@ -168,11 +168,14 @@ Accessibility is part of the brand, not a compliance layer.
 
 ## Voice
 
+The full standard for words is [CONTENT.md](CONTENT.md): how headlines, buttons, errors, FAQs, legal pages and social cards are written, with examples. The short version:
+
 - Lowercase where the brand speaks (wordmark, titles, taglines). Normal sentence case in body copy.
 - Short and plain. "No downloads, no sign-ups." "Free to use."
-- Honest about limits. If checkout is a demo, say so on the page. If a policy is a placeholder, say that too.
+- Honest about limits. If checkout is a demo, say so on the page. Never promise what the site can't do.
 - One joke per screen, at most. The name is already a joke; it doesn't need help.
 - Button labels say what happens: "Add to cart", "Say hello", "Play". Never "Submit" or "Click here".
+- No em dashes in anything a visitor reads, and no placeholder text in anything that ships.
 
 ## Social cards
 

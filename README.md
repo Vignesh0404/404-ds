@@ -2,7 +2,7 @@
 
 The design system shared by [the404labs.co](https://the404labs.co), 404shop and 404games. One set of tokens, one base stylesheet, one accessibility contract.
 
-Brand rules and how to use the tokens: [DESIGN.md](DESIGN.md).
+Brand rules and how to use the tokens: [DESIGN.md](DESIGN.md). How the sites talk: [CONTENT.md](CONTENT.md).
 
 ## Install
 

@@ -1,6 +1,6 @@
 ---
 name: 404-ds
-description: How to build or change UI on the404labs.co, 404shop and 404games. Use before writing or editing any component, page, stylesheet, colour, font, button, form field, sheet, header, footer, logo or social card in these repos, and whenever a task mentions the design system, brand, tones, tokens or accessibility settings.
+description: How to build or change UI, and how to write the words on it, for the404labs.co, 404shop and 404games. Use before writing or editing any component, page, stylesheet, colour, font, button, form field, sheet, header, footer, logo or social card in these repos, before writing or changing any text a visitor reads (headlines, button labels, errors, FAQs, product copy, legal pages, page titles), and whenever a task mentions the design system, brand, voice, copy, tones, tokens or accessibility settings.
 ---
 
 # the404labs design system
@@ -42,6 +42,17 @@ Read `node_modules/@the404labs/ds/DESIGN.md` before designing anything. It is th
 
 - `the404labs`, `404shop`, `404games`: lowercase, joined, always. Never "The 404 Labs" or "404 Shop".
 - The logo is the `Wordmark` or `Badge` component, or the SVGs in `@the404labs/ds/assets/`. Never set it in live text.
+
+## Words
+
+Read `node_modules/@the404labs/ds/CONTENT.md` before writing or changing any text a visitor reads. It is the standard for voice, and it has examples for every kind of text. The rules that get broken most:
+
+- The first line says what the thing is. Cleverness comes second.
+- Every claim is true today. Don't promise what the site can't do ("we'll email you"), don't promise a feeling, and don't invent numbers, clients or testimonials. Copy about the studio uses only the facts listed in CONTENT.md under "What we know about ourselves".
+- No placeholder text in anything that ships. If the real words aren't ready, leave the section out and say so.
+- No em dashes or en dashes in visitor-facing text. Use a full stop, a comma or a colon.
+- Buttons say what happens ("Add to cart", "Say hello"). Errors say what happened and what to do. No "Submit", no "Oops".
+- An `aria-label` is copy too.
 
 ## Pages
 

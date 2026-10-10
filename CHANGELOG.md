@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.0
+
+The words.
+
+- `CONTENT.md`: the content guide. How the three sites talk, modelled on The Funday Press: say what it is first, use the words people use, be specific, tell the truth about where things stand, one thought per sentence, one joke per screen. It has patterns for headlines, buttons, empty states, errors, FAQs, product blurbs, game text, legal pages, page titles and accessibility labels, a word list, and the short list of facts that copy about the studio may use.
+- `DESIGN.md`'s Voice section now points to it, and `skill/SKILL.md` tells an agent to read it before writing any text a visitor reads.
+- Social cards: the three lines in `og/cards.json` are rewritten to the guide (no dashes, no "Check out"), and the cards are re-rendered.
+
 ## 0.6.1
 
 - Fix: a reset made on one site did not hold on the site where the setting was first made. Each site kept its own local copy of the record next to the shared cookie, and fell back to it once the cookie was gone. On the404labs.co and its subdomains the cookie is now the only copy, and a site's old per-site record is removed once it has been carried into the cookie. Elsewhere (localhost, preview URLs) the record stays in local storage as before. Found by testing the live sites after release; the earlier simulated test only ever reset on the site that had made the change.
