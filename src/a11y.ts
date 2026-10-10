@@ -115,6 +115,28 @@ export function readStoredA11y(): Record<string, unknown> {
   return {};
 }
 
+const onFamilyDomain = () => {
+  const host = location.hostname;
+  return host === A11Y_COOKIE_DOMAIN || host.endsWith(`.${A11Y_COOKIE_DOMAIN}`);
+};
+
+/**
+ * Removes everything saved: the shared record, this origin's old key (which
+ * readStoredA11y would otherwise fall back to, undoing the reset), and the
+ * cross-site cookie.
+ */
+export function clearStoredA11y() {
+  try {
+    localStorage.removeItem(A11Y_STORAGE_KEY);
+    for (const key of A11Y_LEGACY_KEYS) localStorage.removeItem(key);
+  } catch {
+    // Storage blocked — nothing was saved in the first place.
+  }
+  if (onFamilyDomain()) {
+    document.cookie = `${A11Y_STORAGE_KEY}=; domain=.${A11Y_COOKIE_DOMAIN}; path=/; max-age=0; samesite=lax; secure`;
+  }
+}
+
 export function writeStoredA11y(value: Record<string, unknown>) {
   const json = JSON.stringify(value);
   try {
@@ -125,8 +147,7 @@ export function writeStoredA11y(value: Record<string, unknown>) {
   // Only on the real domain: on localhost or a Vercel preview URL there is no
   // sibling site to share with, and a Domain= that doesn't match the host
   // would be rejected by the browser anyway.
-  const host = location.hostname;
-  if (host === A11Y_COOKIE_DOMAIN || host.endsWith(`.${A11Y_COOKIE_DOMAIN}`)) {
+  if (onFamilyDomain()) {
     document.cookie =
       `${A11Y_STORAGE_KEY}=${encodeURIComponent(json)}; domain=.${A11Y_COOKIE_DOMAIN}; path=/; ` +
       `max-age=31536000; samesite=lax; secure`;

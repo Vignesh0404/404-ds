@@ -26,6 +26,7 @@ export const a11yInitScript = `(function () {
     d.a11yCursor = parsed.cursorSize === "lg" || parsed.cursorSize === "xl" ? parsed.cursorSize : "default";
     d.a11yImages = parsed.hideImages ? "hide" : "show";
     d.a11yText = parsed.textSize === "sm" || parsed.textSize === "lg" || parsed.textSize === "xl" ? parsed.textSize : "md";
-    d.a11yMotion = parsed.reduceMotion ? "reduce" : "auto";
+    var motion = typeof parsed.reduceMotion === "boolean" ? parsed.reduceMotion : !!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches);
+    d.a11yMotion = motion ? "reduce" : "auto";
   } catch (e) {}
 })();`;

@@ -7,7 +7,7 @@ Brand rules and how to use the tokens: [DESIGN.md](DESIGN.md).
 ## Install
 
 ```sh
-npm install github:Vignesh0404/404-ds#v0.3.0
+npm install github:Vignesh0404/404-ds#v0.4.0
 ```
 
 npm 12 refuses git dependencies unless a project opts in. Each site needs this line in an `.npmrc` at its root, committed:
@@ -21,7 +21,7 @@ The package is built when npm fetches it, so there is nothing to publish. npm pr
 To move a site to a newer version, the bump itself needs a wider setting, once, on the command line:
 
 ```sh
-npm install --allow-git=all github:Vignesh0404/404-ds#v0.3.0
+npm install --allow-git=all github:Vignesh0404/404-ds#v0.4.0
 ```
 
 With `allow-git=root`, npm installs from the lockfile without complaint (which is all a deploy does) but refuses to change a git dependency that is already locked. Keep `root` in the committed `.npmrc`; don't widen it there.
@@ -85,7 +85,22 @@ The shared a11y settings are mirrored to a first-party cookie on `.the404labs.co
 | `@the404labs/ds/tokens.json` | Tokens in Design Tokens (DTCG) format. |
 | `@the404labs/ds/tones.json` | The derived tone values. |
 
-Still to come: the accessibility panel, the wordmark, and the shared header and footer; see [CHANGELOG.md](CHANGELOG.md).
+### Accessibility
+
+Wrap the app in the provider once, then put the button and the panel wherever the site's controls live:
+
+```tsx
+import { A11yButton, A11yPanel, A11yProvider } from "@the404labs/ds";
+
+<A11yProvider>…</A11yProvider>
+
+<A11yButton aria-expanded={open} onClick={() => setOpen(true)} />
+<A11yPanel open={open} onClose={() => setOpen(false)} />
+```
+
+A site with its own switches declares them on the provider (`extras={{ keyboardKick: false }}`), reads them from `useA11y().extras`, and renders them as children of the panel using `A11ySection` and `A11yToggle`. `features` turns off sections that don't apply.
+
+Still to come: the wordmark, and the shared header and footer; see [CHANGELOG.md](CHANGELOG.md).
 
 ## Work on it
 

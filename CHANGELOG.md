@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.4.0
+
+The accessibility panel and its settings, shared.
+
+- `A11yProvider` / `useA11y`: one provider for the family. Settings are saved under one key and, on the404labs.co and its subdomains, mirrored to a first-party cookie so they follow a visitor across the three sites. A site that adopts this must say so on its privacy and cookie pages.
+- `extras` on the provider: a site's own on/off settings, stored and reset with the shared ones.
+- `A11yPanel`, `A11yButton`, and the `A11ySection` / `A11yToggle` building blocks. `features` hides sections that don't apply to a site; children add site-specific sections.
+- The page reader moves here from the404labs.co.
+- With no saved motion setting, reduced motion now follows the operating system on every site (404games already did this). The pre-paint script does the same.
+
 ## 0.3.0
 
 Shared components. Import `@the404labs/ds/components.css` once, then the components from `@the404labs/ds`. React 19 is now a peer dependency.
