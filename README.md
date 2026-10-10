@@ -7,7 +7,7 @@ Brand rules and how to use the tokens: [DESIGN.md](DESIGN.md).
 ## Install
 
 ```sh
-npm install github:Vignesh0404/404-ds#v0.4.0
+npm install github:Vignesh0404/404-ds#v0.5.0
 ```
 
 npm 12 refuses git dependencies unless a project opts in. Each site needs this line in an `.npmrc` at its root, committed:
@@ -21,7 +21,7 @@ The package is built when npm fetches it, so there is nothing to publish. npm pr
 To move a site to a newer version, the bump itself needs a wider setting, once, on the command line:
 
 ```sh
-npm install --allow-git=all github:Vignesh0404/404-ds#v0.4.0
+npm install --allow-git=all github:Vignesh0404/404-ds#v0.5.0
 ```
 
 With `allow-git=root`, npm installs from the lockfile without complaint (which is all a deploy does) but refuses to change a git dependency that is already locked. Keep `root` in the committed `.npmrc`; don't widen it there.
@@ -100,7 +100,18 @@ import { A11yButton, A11yPanel, A11yProvider } from "@the404labs/ds";
 
 A site with its own switches declares them on the provider (`extras={{ keyboardKick: false }}`), reads them from `useA11y().extras`, and renders them as children of the panel using `A11ySection` and `A11yToggle`. `features` turns off sections that don't apply.
 
-Still to come: the wordmark, and the shared header and footer; see [CHANGELOG.md](CHANGELOG.md).
+### Header, footer, logo
+
+```tsx
+import { SiteFooter, SiteHeader, Wordmark } from "@the404labs/ds";
+
+<SiteHeader site="404shop" tone="paper" homeAs={Link} homeProps={{ to: "/" }} controls={<><A11yWidget /><CartButton /></>} />
+<SiteFooter site="404shop">
+  <Link to="/faq">FAQ</Link>
+</SiteFooter>
+```
+
+`tone` on the header is the tone of the page beneath it. Pages whose content starts at the top pad by `var(--ds-header-height)`. The logo files for use outside React are in `@the404labs/ds/assets/`.
 
 ## Work on it
 

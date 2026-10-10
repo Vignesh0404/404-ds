@@ -55,6 +55,9 @@ const plain = [
   // rem (404games' HUD is sized in container-query units). base.css sets it
   // per data-a11y-text value.
   "  --a11y-text-scale: 1;",
+  // Height of the shared site header. A page whose content starts at the top
+  // pads by this so the fixed bar doesn't cover it.
+  "  --ds-header-height: 4rem;",
 ];
 
 const indent = (block) => block.replace(/^(?=.)/gm, "  ");

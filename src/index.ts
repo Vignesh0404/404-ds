@@ -16,3 +16,7 @@ export type { A11yExtras } from "./components/A11yProvider.js";
 export { A11yPanel, A11yButton, A11ySection, A11yToggle } from "./components/A11yPanel.js";
 export type { A11yPanelProps } from "./components/A11yPanel.js";
 export * from "./components/icons.js";
+export { Wordmark, Badge } from "./components/Wordmark.js";
+export type { SiteName } from "./components/Wordmark.js";
+export { SiteHeader, SiteFooter, PageToneProvider, usePageTone, FAMILY } from "./components/SiteChrome.js";
+export type { SiteHeaderProps, SiteFooterProps } from "./components/SiteChrome.js";

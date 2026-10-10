@@ -1,6 +1,6 @@
 {
   "name": "@the404labs/ds",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "the404labs design system — tokens, base styles, a11y and shared components for the404labs.co, 404shop and 404games.",
   "type": "module",
   "license": "UNLICENSED",
@@ -17,7 +17,8 @@
     "src",
     "tsconfig.json",
     "DESIGN.md",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "assets"
   ],
   "exports": {
     ".": {
@@ -34,7 +35,8 @@
     "./fonts.css": "./css/fonts.css",
     "./tokens.json": "./dist/tokens.json",
     "./tones.json": "./dist/tones.json",
-    "./components.css": "./dist/components.css"
+    "./components.css": "./dist/components.css",
+    "./assets/*": "./assets/*"
   },
   "scripts": {
     "dev": "npm run build:tokens && vite",
@@ -42,7 +44,8 @@
     "build:tokens": "node scripts/build-tokens.mjs",
     "test:contrast": "node scripts/contrast.mjs",
     "lint": "oxlint",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "build:wordmarks": "node scripts/build-wordmarks.mjs"
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.8",
@@ -61,6 +64,7 @@
   "devDependencies": {
     "@types/node": "^24.13.3",
     "@types/react": "^19.3.0",
+    "opentype.js": "^2.0.0",
     "oxlint": "^1.82.0",
     "react": "^19.3.0",
     "typescript": "~6.0.2",

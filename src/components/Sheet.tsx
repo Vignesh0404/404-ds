@@ -6,11 +6,11 @@ import { CloseIcon, StarIcon } from "./icons.js";
 const FOCUSABLE_SELECTOR =
   'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
 
-// Matches --motion-sheet. The panel stays mounted this long after `open`
-// goes false so its exit transition can play.
-const EXIT_MS = 220;
+// Match --motion-sheet and --motion-drawer. The panel stays mounted this
+// long after `open` goes false so its exit transition can play.
+const EXIT_MS = { end: 220, left: 300 };
 
-export type SheetTone = "green" | "brown" | "ink" | "red" | "purple" | "blue";
+export type SheetTone = "paper" | "cream" | "yellow" | "purple-light" | "red" | "green" | "blue" | "brown" | "purple" | "ink";
 
 export type SheetProps = {
   open: boolean;
@@ -21,6 +21,11 @@ export type SheetProps = {
   closeLabel: string;
   /** The panel's surface. Pick one that contrasts with the page behind it. */
   tone?: SheetTone;
+  /**
+   * "end" (default): a bottom sheet on a phone, a right-hand panel from
+   * 768px. "left": a panel from the left edge at every width — the site menu.
+   */
+  side?: "end" | "left";
   children: ReactNode;
   /**
    * Overrides the default "return focus to whatever had it before the sheet
@@ -39,7 +44,7 @@ export type SheetProps = {
  * sites' copies lacked: the close button is focused only once it is actually
  * in the DOM, and onCloseAutoFocus.
  */
-export function Sheet({ open, onClose, title, subtitle, closeLabel, tone = "green", children, onCloseAutoFocus }: SheetProps) {
+export function Sheet({ open, onClose, title, subtitle, closeLabel, tone = "green", side = "end", children, onCloseAutoFocus }: SheetProps) {
   const headingId = useId();
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -65,9 +70,9 @@ export function Sheet({ open, onClose, title, subtitle, closeLabel, tone = "gree
       return () => cancelAnimationFrame(frame);
     }
     setVisible(false);
-    const timer = window.setTimeout(() => setMounted(false), EXIT_MS);
+    const timer = window.setTimeout(() => setMounted(false), EXIT_MS[side]);
     return () => window.clearTimeout(timer);
-  }, [open]);
+  }, [open, side]);
 
   useEffect(() => {
     if (!open) return;
@@ -126,6 +131,7 @@ export function Sheet({ open, onClose, title, subtitle, closeLabel, tone = "gree
         aria-labelledby={headingId}
         className="ds-sheet"
         data-tone={tone}
+        data-side={side === "left" ? "left" : undefined}
         onMouseDown={(e) => e.stopPropagation()}
       >
         <div className="ds-sheet-header">

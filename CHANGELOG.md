@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.5.0
+
+The logo and the shared page chrome.
+
+- `Wordmark` (`the404labs`, `404shop`, `404games`) and `Badge`: outlined drawings, generated from Lilita One by `npm run build:wordmarks`. Standalone files in `assets/` (`@the404labs/ds/assets/badge.svg`, `wordmark-*.svg`) for favicons and social cards.
+- `SiteHeader`: transparent, takes the page's tone, fills once scrolled. Links to the three sites on the left, wordmark in the centre, controls on the right; below 768px a menu button opens a panel from the left.
+- `SiteFooter`: on ink; wordmark, the three sites, social links, contact, a row for the site's own links.
+- `Sheet` gains `side="left"` and accepts any tone.
+- `--ds-header-height` for pages to pad by.
+
 ## 0.4.0
 
 The accessibility panel and its settings, shared.
