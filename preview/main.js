@@ -1,6 +1,7 @@
 import "./preview.css";
 import tokens from "../dist/tokens.json";
 import tones from "../dist/tones.json";
+import { mountComponents } from "./components.js";
 
 const entries = (group) => Object.entries(tokens[group]).filter(([key]) => !key.startsWith("$"));
 const el = (tag, props = {}, children = []) => {
@@ -92,6 +93,10 @@ const radii = el(
   }),
 );
 
+const components = el("div", { className: "components" });
+const componentsSection = section("React", "Components", components);
+componentsSection.id = "components";
+
 document.getElementById("content").append(
   el("p", { className: "eyebrow", textContent: "@the404labs/ds" }),
   el("h1", { className: "page-title", textContent: "the404labs design system" }),
@@ -99,4 +104,7 @@ document.getElementById("content").append(
   section("Tier 2", "Tones", toneCards),
   section("Type", "Families and scale", typeRows),
   section("Shape", "Radii", radii),
+  componentsSection,
 );
+
+mountComponents(components, document.getElementById("footer"));

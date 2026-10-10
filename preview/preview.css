@@ -7,7 +7,8 @@
 main {
   max-width: var(--container-page);
   margin: 0 auto;
-  padding: 48px var(--spacing-gutter-mobile) 96px;
+  /* Clears the fixed SiteHeader the components section mounts. */
+  padding: calc(var(--ds-header-height) + 48px) var(--spacing-gutter-mobile) 96px;
 }
 
 @media (min-width: 768px) {
@@ -211,4 +212,67 @@ section > h2 {
   width: 160px;
   height: 120px;
   background: var(--color-green);
+}
+
+/* ---- React components ---- */
+.components {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.demo-note {
+  color: var(--tone-fg-muted);
+  font-size: 0.875rem;
+}
+
+.demo-stage {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 20px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--tone-border);
+  background: var(--tone-bg);
+  color: var(--tone-fg);
+}
+
+.demo-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  align-items: center;
+  padding: 14px 0;
+  border-top: 1px solid var(--tone-border);
+}
+
+@media (min-width: 768px) {
+  .demo-row {
+    grid-template-columns: 220px 1fr;
+    gap: 16px;
+  }
+}
+
+.demo-row > code {
+  font-size: var(--text-caption);
+  color: var(--tone-fg-muted);
+}
+
+.demo-items {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.demo-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: min(100%, 360px);
+}
+
+.demo-wordmark {
+  font-size: 2rem;
 }
