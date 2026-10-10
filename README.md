@@ -10,7 +10,15 @@ Brand rules and how to use the tokens: [DESIGN.md](DESIGN.md).
 npm install github:Vignesh0404/404-ds#v0.1.0
 ```
 
-The package builds itself on install (`prepare`), so there is nothing to publish. To update a site, change the tag.
+npm 12 refuses git dependencies unless a project opts in. Each site needs this line in an `.npmrc` at its root, committed:
+
+```ini
+allow-git=root
+```
+
+The package is built when npm fetches it, so there is nothing to publish. npm prints a warning that the package's `prepare` script was blocked for the installed copy; that is expected and harmless, because `dist/` is already there. To update a site, change the tag.
+
+While this repo is private, anything that installs it (Vercel, CI) needs a GitHub token with read access to it.
 
 ## Use
 
