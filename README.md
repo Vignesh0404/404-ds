@@ -16,7 +16,15 @@ npm 12 refuses git dependencies unless a project opts in. Each site needs this l
 allow-git=root
 ```
 
-The package is built when npm fetches it, so there is nothing to publish. npm prints a warning that the package's `prepare` script was blocked for the installed copy; that is expected and harmless, because `dist/` is already there. To update a site, change the tag.
+The package is built when npm fetches it, so there is nothing to publish. npm prints a warning that the package's `prepare` script was blocked for the installed copy; that is expected and harmless, because `dist/` is already there.
+
+To move a site to a newer version, the bump itself needs a wider setting, once, on the command line:
+
+```sh
+npm install --allow-git=all github:Vignesh0404/404-ds#v0.1.2
+```
+
+With `allow-git=root`, npm installs from the lockfile without complaint (which is all a deploy does) but refuses to change a git dependency that is already locked. Keep `root` in the committed `.npmrc`; don't widen it there.
 
 While this repo is private, anything that installs it (Vercel, CI) needs a GitHub token with read access to it.
 
