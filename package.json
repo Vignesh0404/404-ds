@@ -1,6 +1,6 @@
 {
   "name": "@the404labs/ds",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "the404labs design system — tokens, base styles, a11y and shared components for the404labs.co, 404shop and 404games.",
   "type": "module",
   "license": "UNLICENSED",

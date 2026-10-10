@@ -1,4 +1,4 @@
-import { A11Y_LEGACY_KEYS, A11Y_STORAGE_KEY } from "./a11y.js";
+import { A11Y_COOKIE_DOMAIN, A11Y_LEGACY_KEYS, A11Y_STORAGE_KEY } from "./a11y.js";
 
 // The script that applies saved a11y settings to <html> before first paint,
 // so a reload never flashes the default font, text size or cursor. It has to
@@ -13,11 +13,14 @@ export const a11yInitScript = `(function () {
   try {
     var KEY = ${JSON.stringify(A11Y_STORAGE_KEY)};
     var LEGACY = ${JSON.stringify(A11Y_LEGACY_KEYS)};
+    var DOMAIN = ${JSON.stringify(A11Y_COOKIE_DOMAIN)};
     var read = function (raw) {
       try { var v = raw ? JSON.parse(raw) : null; return v && typeof v === "object" ? v : null; } catch (e) { return null; }
     };
     var m = document.cookie.match(new RegExp("(?:^|; )" + KEY + "=([^;]*)"));
-    var parsed = read(m && decodeURIComponent(m[1])) || read(localStorage.getItem(KEY));
+    var host = location.hostname;
+    var family = host === DOMAIN || host.slice(-DOMAIN.length - 1) === "." + DOMAIN;
+    var parsed = family ? read(m && decodeURIComponent(m[1])) : read(localStorage.getItem(KEY));
     for (var i = 0; !parsed && i < LEGACY.length; i++) parsed = read(localStorage.getItem(LEGACY[i]));
     parsed = parsed || {};
     var d = document.documentElement.dataset;

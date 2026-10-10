@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.6.1
+
+- Fix: a reset made on one site did not hold on the site where the setting was first made. Each site kept its own local copy of the record next to the shared cookie, and fell back to it once the cookie was gone. On the404labs.co and its subdomains the cookie is now the only copy, and a site's old per-site record is removed once it has been carried into the cookie. Elsewhere (localhost, preview URLs) the record stays in local storage as before. Found by testing the live sites after release; the earlier simulated test only ever reset on the site that had made the change.
+
 ## 0.6.0
 
 The guardrails.
