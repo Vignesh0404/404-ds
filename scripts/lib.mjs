@@ -58,13 +58,27 @@ export function deriveTones(tokens) {
     const fg = color(tone.fg);
     const dark = luminance(bg) < 0.2;
 
-    // Muted text: the quietest 5% step of fg-over-bg that still passes AA.
-    // The sites used fixed opacities (cream/60, ink/50…), which pass on some
+    // For surfaces that are pressable but aren't buttons (rows, tiles, list
+    // items) — buttons flip fg and bg instead and need no token. It darkens:
+    // lightening a dark tone (green → green-light) drops cream text to
+    // 3.36:1, which is how the old button hover failed.
+    const hover = tone.hover ? color(tone.hover) : mix(color("ink-soft"), bg, dark ? 0.16 : 0.08);
+
+    // Field and inset-card fill. It moves away from the text colour — darker
+    // on a dark tone — so text on it gains contrast. The sites used the
+    // opposite (cream at 10% over green), which looks like a field but puts
+    // cream text at 4.38:1 and muted text at 3.84:1.
+    const field = mix(color("ink-soft"), bg, dark ? 0.22 : 0.06);
+
+    // Muted text: the quietest 5% step of fg-over-bg that still passes AA on
+    // every fill it can sit on — the surface, its hover, and a field. The
+    // sites used fixed opacities (cream/60, ink/50…), which pass on some
     // tones and fail on others; deriving per tone is the fix.
+    const fills = [bg, hover, field];
     let muted = fg;
     for (let a = 0.5; a < 1; a += 0.05) {
       const candidate = mix(fg, bg, a);
-      if (contrast(candidate, bg) >= MUTED_TARGET) {
+      if (fills.every((fill) => contrast(candidate, fill) >= MUTED_TARGET)) {
         muted = candidate;
         break;
       }
@@ -75,14 +89,10 @@ export function deriveTones(tokens) {
       fg,
       "fg-muted": muted,
       accent: color(tone.accent),
-      // For surfaces that are pressable but aren't buttons (rows, tiles,
-      // list items) — buttons flip fg and bg instead and need no token.
-      // It darkens: lightening a dark tone (green → green-light) drops cream
-      // text to 3.36:1, which is how the old button hover failed.
-      "bg-hover": tone.hover ? color(tone.hover) : mix(color("ink-soft"), bg, dark ? 0.16 : 0.08),
+      "bg-hover": hover,
       border: mix(fg, bg, 0.15),
       "border-strong": mix(fg, bg, 0.3),
-      field: mix(fg, bg, 0.1),
+      field,
       // One focus ring per tone: ink on light surfaces, yellow on dark ones.
       // Yellow on paper was 1.34:1 — an invisible ring.
       focus: dark ? color("yellow") : color("ink"),

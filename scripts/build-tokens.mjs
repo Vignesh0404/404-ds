@@ -92,12 +92,37 @@ ${layered(`:root {\n${[...themed, ...plain].join("\n")}\n}`, toneVars)}
 ${toneSurface}
 `;
 
+// Tone utilities for Tailwind sites: bg-tone, text-on-tone,
+// text-on-tone-muted, text-tone-accent, bg-tone-hover, border-tone-border,
+// bg-tone-field… They are colours like any other, so every colour utility
+// works with them (bg-on-tone and text-tone give the button flip).
+//
+// `inline` is required, not a preference. Without it Tailwind would define
+// --color-tone once on :root, resolving var(--tone-bg) there — every element
+// would get the page's tone. Inlined, each utility reads var(--tone-bg) on
+// the element it is applied to, so it follows the nearest [data-tone].
+const toneUtilities = [
+  ["tone", "bg"],
+  ["on-tone", "fg"],
+  ["on-tone-muted", "fg-muted"],
+  ["tone-accent", "accent"],
+  ["tone-hover", "bg-hover"],
+  ["tone-border", "border"],
+  ["tone-border-strong", "border-strong"],
+  ["tone-field", "field"],
+  ["tone-focus", "focus"],
+].map(([utility, variable]) => `  --color-${utility}: var(--tone-${variable});`);
+
 // `static`: Tailwind otherwise drops theme variables no utility uses, and
 // components.css reads these by name whether or not a site's own markup does.
 // Tailwind emits this block into @layer theme itself.
 const themeCss = `${HEADER}
 @theme static {
 ${themed.join("\n")}
+}
+
+@theme inline {
+${toneUtilities.join("\n")}
 }
 
 ${layered(`:root {\n${plain.join("\n")}\n}`, toneVars)}

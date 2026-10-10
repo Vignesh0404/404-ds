@@ -68,7 +68,7 @@ Tones: `paper` (default), `cream`, `yellow`, `purple-light`, `red`, `green`, `bl
 | `--tone-accent` | Display headlines, marks, the "on" state. Large text only (24px and up) on green and blue. |
 | `--tone-bg-hover` | A pressable surface under the pointer. |
 | `--tone-border`, `--tone-border-strong` | Hairlines and control outlines. |
-| `--tone-field` | Input fill. |
+| `--tone-field` | Fill of inputs and inset cards. Slightly darker than the surface, so text on it keeps its contrast. |
 | `--tone-focus` | The focus ring. |
 
 ### One tone per screen
@@ -78,6 +78,8 @@ A screen is one tone, edge to edge. The header is transparent and takes that ton
 - Change tone only at a full-bleed section boundary, never for a card floating inside another tone.
 - A screen shows its tone, that tone's accent, and nothing else. A second colour needs a reason: a product's colourway, a game's pitch, an illustration.
 - Each site's home opens on red, the brand colour. Reading pages (FAQ, legal, checkout) are paper.
+
+In a Tailwind site the same values are utilities: `bg-tone`, `text-on-tone`, `text-on-tone-muted`, `text-tone-accent`, `bg-tone-hover`, `border-tone-border`, `border-tone-border-strong`, `bg-tone-field`.
 
 Rules:
 
@@ -115,7 +117,7 @@ No drop shadows as decoration. A shadow appears only on things that float above 
 
 ## Buttons
 
-There is one button. It is a pill with a 2px outline in the tone's text colour, filled with the tone's surface, labelled in Lilita One.
+There is one button. It is a pill with a 2px outline, labelled in Lilita One. The outline is the text colour of the surface the button sits on, not of the button: ink on a paper page, cream on a red hero or a green sheet. That keeps the outline visible whichever way the button is flipped.
 
 - **Hover and focus: it flips.** The fill becomes the text colour and the label becomes the surface colour, in 100ms. Nothing moves and nothing gets a shadow.
 - **Press:** it settles to 98% scale.

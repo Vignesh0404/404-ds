@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.0
+
+- Tone utilities for Tailwind sites, in `theme.css`: `bg-tone`, `text-on-tone`, `text-on-tone-muted`, `text-tone-accent`, `bg-tone-hover`, `border-tone-border`, `border-tone-border-strong`, `bg-tone-field`, `outline-tone-focus`. Each follows the nearest `data-tone`. `bg-on-tone` with `text-tone` is the button flip.
+- `--tone-field` now moves away from the text colour (darker on dark tones) instead of toward it. The old direction looked like a field but dropped cream text on a green sheet to 4.38:1 and muted text to 3.84:1.
+- Muted text is derived to pass on the surface, its hover fill and a field, not the surface alone. The contrast test grew from 50 to 80 pairs to cover those.
+- Button rule: the outline takes the surrounding surface's text colour, so it stays visible in both states of the flip.
+
 ## 0.1.2
 
 - Fix: the accessibility panel could not override tokens. Generated variables were unlayered, and `base.css` overrides some of them from `@layer base` (the dyslexia font swaps `--font-*`; the text-size setting sets `--a11y-text-scale`). A layered rule never outranks an unlayered one, so on a plain-CSS site the dyslexia font did nothing, and `--a11y-text-scale` stayed at 1 everywhere. All generated variables now sit in `@layer theme`, and `tokens.css` declares the order `theme, base`.

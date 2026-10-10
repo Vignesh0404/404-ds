@@ -7,7 +7,7 @@ Brand rules and how to use the tokens: [DESIGN.md](DESIGN.md).
 ## Install
 
 ```sh
-npm install github:Vignesh0404/404-ds#v0.1.2
+npm install github:Vignesh0404/404-ds#v0.2.0
 ```
 
 npm 12 refuses git dependencies unless a project opts in. Each site needs this line in an `.npmrc` at its root, committed:
@@ -21,12 +21,10 @@ The package is built when npm fetches it, so there is nothing to publish. npm pr
 To move a site to a newer version, the bump itself needs a wider setting, once, on the command line:
 
 ```sh
-npm install --allow-git=all github:Vignesh0404/404-ds#v0.1.2
+npm install --allow-git=all github:Vignesh0404/404-ds#v0.2.0
 ```
 
 With `allow-git=root`, npm installs from the lockfile without complaint (which is all a deploy does) but refuses to change a git dependency that is already locked. Keep `root` in the committed `.npmrc`; don't widen it there.
-
-While this repo is private, anything that installs it (Vercel, CI) needs a GitHub token with read access to it.
 
 ## Use
 

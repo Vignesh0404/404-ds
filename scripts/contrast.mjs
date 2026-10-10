@@ -17,6 +17,9 @@ for (const [name, t] of Object.entries(tones)) {
   check(name, "fg on bg", t.fg, t.bg, AA_TEXT);
   check(name, "fg-muted on bg", t["fg-muted"], t.bg, AA_TEXT);
   check(name, "fg on bg-hover", t.fg, t["bg-hover"], AA_TEXT);
+  check(name, "fg-muted on bg-hover", t["fg-muted"], t["bg-hover"], AA_TEXT);
+  check(name, "fg on field", t.fg, t.field, AA_TEXT);
+  check(name, "fg-muted on field", t["fg-muted"], t.field, AA_TEXT);
   // Accent is for display type, icons and UI marks — never body copy — so it
   // is held to the large-text / UI line.
   check(name, "accent on bg", t.accent, t.bg, AA_UI);
