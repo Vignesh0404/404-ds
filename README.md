@@ -7,7 +7,7 @@ Brand rules and how to use the tokens: [DESIGN.md](DESIGN.md).
 ## Install
 
 ```sh
-npm install github:Vignesh0404/404-ds#v0.1.1
+npm install github:Vignesh0404/404-ds#v0.1.2
 ```
 
 npm 12 refuses git dependencies unless a project opts in. Each site needs this line in an `.npmrc` at its root, committed:

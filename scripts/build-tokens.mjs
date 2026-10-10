@@ -57,6 +57,8 @@ const plain = [
   "  --a11y-text-scale: 1;",
 ];
 
+const indent = (block) => block.replace(/^(?=.)/gm, "  ");
+
 const toneBlock = (tone) =>
   Object.entries(tone)
     .map(([key, value]) => `  --tone-${key}: ${value};`)
@@ -64,33 +66,43 @@ const toneBlock = (tone) =>
 
 // Paper is the page default, so every component has a tone to read even
 // outside any [data-tone] ancestor.
-const toneCss = [
+const toneVars = [
   `:root {\n${toneBlock(tones.paper)}\n}`,
   ...Object.entries(tones).map(([name, tone]) => `[data-tone="${name}"] {\n${toneBlock(tone)}\n}`),
-  // In @layer base so a site's own utility or component class still wins.
-  `@layer base {\n  [data-tone] {\n    background-color: var(--tone-bg);\n    color: var(--tone-fg);\n  }\n}`,
 ].join("\n\n");
 
-const tokensCss = `${HEADER}
-:root {
-${[...themed, ...plain].join("\n")}
-}
+// In @layer base so a site's own utility or component class still wins.
+const toneSurface = `@layer base {\n  [data-tone] {\n    background-color: var(--tone-bg);\n    color: var(--tone-fg);\n  }\n}`;
 
-${toneCss}
+// Every variable is declared inside @layer theme — the layer Tailwind puts
+// its own @theme output in. That is load-bearing, not tidiness: base.css
+// overrides some of these from @layer base (the dyslexia font swaps
+// --font-*, the text-size setting sets --a11y-text-scale), and a layered
+// rule can never outrank an unlayered one, whatever its specificity. Left
+// unlayered, the tokens silently defeat the accessibility panel.
+const layered = (...blocks) => `@layer theme {\n${blocks.map(indent).join("\n\n")}\n}`;
+
+// The plain build has no Tailwind to establish the layer order, so it states
+// it: theme first, base after.
+const tokensCss = `${HEADER}
+@layer theme, base;
+
+${layered(`:root {\n${[...themed, ...plain].join("\n")}\n}`, toneVars)}
+
+${toneSurface}
 `;
 
 // `static`: Tailwind otherwise drops theme variables no utility uses, and
 // components.css reads these by name whether or not a site's own markup does.
+// Tailwind emits this block into @layer theme itself.
 const themeCss = `${HEADER}
 @theme static {
 ${themed.join("\n")}
 }
 
-:root {
-${plain.join("\n")}
-}
+${layered(`:root {\n${plain.join("\n")}\n}`, toneVars)}
 
-${toneCss}
+${toneSurface}
 `;
 
 const dist = join(ROOT, "dist");

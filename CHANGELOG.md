@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2
+
+- Fix: the accessibility panel could not override tokens. Generated variables were unlayered, and `base.css` overrides some of them from `@layer base` (the dyslexia font swaps `--font-*`; the text-size setting sets `--a11y-text-scale`). A layered rule never outranks an unlayered one, so on a plain-CSS site the dyslexia font did nothing, and `--a11y-text-scale` stayed at 1 everywhere. All generated variables now sit in `@layer theme`, and `tokens.css` declares the order `theme, base`.
+
 ## 0.1.1
 
 - `base.css` no longer sets `scrollbar-gutter` on `html`. That is layout policy and differs per site: 404games is a full-screen canvas and must not reserve a scrollbar strip.
