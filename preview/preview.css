@@ -1,0 +1,213 @@
+/* Styles for the preview page only — nothing here ships in the package. It
+   reads the same tokens a site would, so it doubles as a smoke test. */
+@import "../dist/tokens.css";
+@import "../css/base.css";
+
+main {
+  max-width: var(--container-page);
+  margin: 0 auto;
+  padding: 48px var(--spacing-gutter-mobile) 96px;
+}
+
+@media (min-width: 768px) {
+  main {
+    padding-inline: var(--spacing-gutter-tablet);
+  }
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+  font-weight: 400;
+}
+
+.eyebrow {
+  font-family: var(--font-brand);
+  font-size: var(--text-label);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-eyebrow);
+  color: var(--tone-fg-muted);
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: var(--text-display-md);
+  line-height: var(--leading-display-tight);
+  letter-spacing: var(--tracking-display);
+  color: var(--tone-accent);
+  margin-top: 8px;
+}
+
+section {
+  margin-top: 64px;
+}
+
+section > h2 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  letter-spacing: var(--tracking-display-tight);
+  margin: 4px 0 20px;
+}
+
+.grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+}
+
+.swatch {
+  border-radius: var(--radius-card);
+  border: 1px solid var(--tone-border);
+  overflow: hidden;
+}
+
+.swatch-chip {
+  height: 84px;
+}
+
+.swatch-meta {
+  padding: 10px 12px 12px;
+  font-size: var(--text-caption);
+}
+
+.swatch-meta b {
+  display: block;
+  font-family: var(--font-brand);
+  font-weight: 400;
+  font-size: 0.875rem;
+}
+
+.swatch-meta span {
+  color: var(--tone-fg-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.tones {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.tone {
+  border-radius: var(--radius-card);
+  border: 1px solid var(--tone-border);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tone h3 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--tone-accent);
+}
+
+.tone .muted {
+  color: var(--tone-fg-muted);
+  font-size: 0.875rem;
+}
+
+.tone input {
+  border-radius: var(--radius-card);
+  border: 1px solid var(--tone-border-strong);
+  background: var(--tone-field);
+  color: var(--tone-fg);
+  font: inherit;
+  font-size: 0.875rem;
+  padding: 12px 16px;
+  min-width: 0;
+}
+
+.tone input::placeholder {
+  color: var(--tone-fg-muted);
+}
+
+.tone .row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* The family button: an outlined pill that flips on hover — fill and text
+   trade places. It is the same pair reversed, so it passes contrast on every
+   tone by construction. */
+.pill {
+  border: var(--border-control) solid var(--tone-fg);
+  border-radius: var(--radius-pill);
+  background: var(--tone-bg);
+  color: var(--tone-fg);
+  font-family: var(--font-brand);
+  font-size: 0.875rem;
+  padding: 10px 20px;
+  transition:
+    background-color var(--motion-instant) var(--motion-ease-out),
+    color var(--motion-instant) var(--motion-ease-out),
+    transform var(--motion-instant) var(--motion-ease-out);
+}
+
+.pill:hover,
+.pill.is-hover {
+  background: var(--tone-fg);
+  color: var(--tone-bg);
+}
+
+.pill:active {
+  transform: scale(var(--motion-press));
+}
+
+.ring {
+  outline: 2px solid var(--tone-focus);
+  outline-offset: 2px;
+}
+
+.ratios {
+  font-size: var(--text-caption);
+  color: var(--tone-fg-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.type-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 16px;
+  align-items: baseline;
+  padding: 14px 0;
+  border-top: 1px solid var(--tone-border);
+  overflow: hidden;
+}
+
+.type-row code,
+.scale code {
+  font-size: var(--text-caption);
+  color: var(--tone-fg-muted);
+}
+
+.type-sample {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.scale {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: flex-end;
+}
+
+.scale > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.radius-box {
+  width: 160px;
+  height: 120px;
+  background: var(--color-green);
+}

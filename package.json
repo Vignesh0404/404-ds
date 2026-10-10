@@ -1,0 +1,45 @@
+{
+  "name": "@the404labs/ds",
+  "version": "0.1.0",
+  "description": "the404labs design system — tokens, base styles, a11y and shared components for the404labs.co, 404shop and 404games.",
+  "type": "module",
+  "license": "UNLICENSED",
+  "repository": "github:Vignesh0404/404-ds",
+  "sideEffects": ["**/*.css"],
+  "files": ["dist", "css", "fonts", "tokens", "scripts", "src", "tsconfig.json", "DESIGN.md", "CHANGELOG.md"],
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
+    "./vite": { "types": "./dist/vite.d.ts", "default": "./dist/vite.js" },
+    "./tokens.css": "./dist/tokens.css",
+    "./theme.css": "./dist/theme.css",
+    "./base.css": "./css/base.css",
+    "./fonts.css": "./css/fonts.css",
+    "./tokens.json": "./dist/tokens.json",
+    "./tones.json": "./dist/tones.json"
+  },
+  "scripts": {
+    "dev": "npm run build:tokens && vite",
+    "build": "npm run build:tokens && npm run test:contrast && tsc -p tsconfig.json",
+    "build:tokens": "node scripts/build-tokens.mjs",
+    "test:contrast": "node scripts/contrast.mjs",
+    "lint": "oxlint",
+    "prepare": "npm run build"
+  },
+  "dependencies": {
+    "@fontsource/inter": "^5.2.8",
+    "@fontsource/lilita-one": "^5.2.8",
+    "@fontsource/tilt-warp": "^5.2.8"
+  },
+  "peerDependencies": {
+    "vite": ">=7"
+  },
+  "peerDependenciesMeta": {
+    "vite": { "optional": true }
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "oxlint": "^1.82.0",
+    "typescript": "~6.0.2",
+    "vite": "^8.2.2"
+  }
+}

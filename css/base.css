@@ -1,0 +1,138 @@
+/* Page defaults and the accessibility contract, shared by all three sites.
+   Import after the tokens:
+
+     Tailwind site      @import "tailwindcss";
+                        @import "@the404labs/ds/theme.css";
+                        @import "@the404labs/ds/base.css";
+
+     plain-CSS site     @import "@the404labs/ds/tokens.css";
+                        @import "@the404labs/ds/base.css";
+
+   Everything here sits in @layer base. In a Tailwind site that merges into
+   Tailwind's own base layer, so utilities win. In 404games nothing else is
+   layered, so the site's own rules win. Either way a site can override any
+   of this without !important. */
+@import "./fonts.css";
+
+@layer base {
+  html {
+    scrollbar-gutter: stable;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    background: var(--tone-bg);
+    color: var(--tone-fg);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  button:not(:disabled),
+  [type="button"]:not(:disabled),
+  [type="reset"]:not(:disabled),
+  [type="submit"]:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+
+  /* The one focus ring. The sites had eight recipes between them, two of
+     which were invisible (yellow on paper 1.34:1, ink/40 on paper 2.53:1).
+     --tone-focus is ink on light tones and yellow on dark ones, and the
+     contrast test holds it to 3:1 against every tone. :where() keeps the
+     specificity at zero so a component can still restyle its own ring. */
+  :where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--tone-focus);
+    outline-offset: 2px;
+  }
+
+  /* Accessibility panel — reacts to data-a11y-* attributes on <html>, set
+     before first paint by the script the Vite plugin injects
+     (@the404labs/ds/vite) and kept in sync afterwards by applyA11yToDocument. */
+
+  html[data-a11y-font="dyslexic"] {
+    --font-body: "OpenDyslexic", system-ui, sans-serif;
+    --font-brand: "OpenDyslexic", system-ui, sans-serif;
+    --font-display: "OpenDyslexic", system-ui, sans-serif;
+    letter-spacing: 0.01em;
+  }
+
+  /* Text size scales the root, so anything sized in rem follows. Sizes that
+     can't be rem (404games' HUD uses container-query units) multiply by
+     --a11y-text-scale instead; both come from the same setting. */
+  html[data-a11y-text="sm"] {
+    font-size: 93.75%;
+    --a11y-text-scale: 0.9375;
+  }
+  html[data-a11y-text="lg"] {
+    font-size: 112.5%;
+    --a11y-text-scale: 1.125;
+  }
+  html[data-a11y-text="xl"] {
+    font-size: 125%;
+    --a11y-text-scale: 1.25;
+  }
+
+  html[data-a11y-links="on"] #content a,
+  html[data-a11y-links="on"] footer a {
+    text-decoration-line: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+    text-decoration-color: var(--tone-accent);
+  }
+
+  html[data-a11y-images="hide"] #content img,
+  html[data-a11y-images="hide"] #content picture,
+  html[data-a11y-images="hide"] #content video,
+  html[data-a11y-images="hide"] #content canvas {
+    visibility: hidden !important;
+  }
+
+  html[data-a11y-cursor="lg"] *:not(input):not(textarea) {
+    cursor:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='34' viewBox='0 0 24 28.8'%3E%3Cpath d='M12 0c.86 4.86 2.28 8.36 4.26 10.34C18.24 12.32 21.7 13.71 24 14.4c-2.3.69-5.76 2.08-7.74 4.06C14.28 20.44 12.86 23.94 12 28.8c-.86-4.86-2.28-8.36-4.26-10.34C5.76 16.48 2.3 15.09 0 14.4c2.3-.69 5.76-2.08 7.74-4.06C9.72 8.36 11.14 4.86 12 0z' fill='%23fad459' stroke='%23161616' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E")
+      14 3,
+      auto;
+  }
+
+  html[data-a11y-cursor="xl"] *:not(input):not(textarea) {
+    cursor:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='48' viewBox='0 0 24 28.8'%3E%3Cpath d='M12 0c.86 4.86 2.28 8.36 4.26 10.34C18.24 12.32 21.7 13.71 24 14.4c-2.3.69-5.76 2.08-7.74 4.06C14.28 20.44 12.86 23.94 12 28.8c-.86-4.86-2.28-8.36-4.26-10.34C5.76 16.48 2.3 15.09 0 14.4c2.3-.69 5.76-2.08 7.74-4.06C9.72 8.36 11.14 4.86 12 0z' fill='%23fad459' stroke='%23161616' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E")
+      20 4,
+      auto;
+  }
+
+  /* Over interactive elements, swap the star for a pointing hand so the
+     large/XL cursor signals "clickable" the same way the native pointer does. */
+  html[data-a11y-cursor="lg"] :is(a, button, [role="button"], input[type="submit"], input[type="button"], label[for], summary):not(:disabled) {
+    cursor:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='35' viewBox='0 0 34 40'%3E%3Cpath d='M14,2 C16.5,2 18,4 18,7 C18,10 18,13 18,16 C18,16 22,16 25,18 C27,19.5 27,23 27,26 C27,30 26,33 23,35 L12,35 C9,35 8,32 8,28 C8,25 8,25 3,22 C3,19 5,17 8,17 C8,17 9,12 10,7 C10.5,4 12,2 14,2 Z' fill='%23fad459' stroke='%23161616' stroke-width='1.5' stroke-linejoin='round'/%3E%3Cpath d='M11,12 C13,13 15,13 17,12' stroke='%23161616' stroke-width='1.2' fill='none' stroke-linecap='round'/%3E%3Cpath d='M19,20 C21.5,21.5 24,21.5 26,20' stroke='%23161616' stroke-width='1.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E")
+      12 3,
+      pointer;
+  }
+
+  html[data-a11y-cursor="xl"] :is(a, button, [role="button"], input[type="submit"], input[type="button"], label[for], summary):not(:disabled) {
+    cursor:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='52' viewBox='0 0 34 40'%3E%3Cpath d='M14,2 C16.5,2 18,4 18,7 C18,10 18,13 18,16 C18,16 22,16 25,18 C27,19.5 27,23 27,26 C27,30 26,33 23,35 L12,35 C9,35 8,32 8,28 C8,25 8,25 3,22 C3,19 5,17 8,17 C8,17 9,12 10,7 C10.5,4 12,2 14,2 Z' fill='%23fad459' stroke='%23161616' stroke-width='1.5' stroke-linejoin='round'/%3E%3Cpath d='M11,12 C13,13 15,13 17,12' stroke='%23161616' stroke-width='1.2' fill='none' stroke-linecap='round'/%3E%3Cpath d='M19,20 C21.5,21.5 24,21.5 26,20' stroke='%23161616' stroke-width='1.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E")
+      18 4,
+      pointer;
+  }
+
+  /* Browser autofill (Chrome/Safari/Edge) forces its own background on
+     inputs via -webkit-autofill; the inset box-shadow trick is the only
+     reliable way to override it. --tone-field is a flat hex (the field tint
+     already blended against the tone), because a box-shadow can't read an
+     opacity through the cascade — which is why the sites each carried
+     hand-blended hexes per sheet colour. One rule now covers every tone. */
+  :where([data-tone]) :is(input, textarea, select):-webkit-autofill,
+  :where([data-tone]) :is(input, textarea, select):-webkit-autofill:hover,
+  :where([data-tone]) :is(input, textarea, select):-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--tone-fg);
+    caret-color: var(--tone-fg);
+    -webkit-box-shadow: 0 0 0 1000px var(--tone-field) inset;
+    box-shadow: 0 0 0 1000px var(--tone-field) inset;
+    transition: background-color 600000s 0s, color 600000s 0s;
+  }
+}

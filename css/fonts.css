@@ -1,0 +1,47 @@
+/* Every typeface the family uses, self-hosted. The three sites each used to
+   link Google Fonts from index.html and each carry their own 865 KB copy of
+   OpenDyslexic in public/ — this file replaces all six of those.
+
+   Self-hosting also removes a failure the sites already hit once: rendering
+   the OG card before a third-party font request lands bakes the system
+   fallback into the PNG. */
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/inter/700.css";
+@import "@fontsource/lilita-one/400.css";
+@import "@fontsource/tilt-warp/400.css";
+
+/* Swapped in for all three font roles by html[data-a11y-font="dyslexic"]
+   (see base.css). */
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("../fonts/OpenDyslexic/OpenDyslexic-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("../fonts/OpenDyslexic/OpenDyslexic-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("../fonts/OpenDyslexic/OpenDyslexic-Italic.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("../fonts/OpenDyslexic/OpenDyslexic-Bold-Italic.otf") format("opentype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
