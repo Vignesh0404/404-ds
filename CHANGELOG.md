@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.11.1
+
+- The skill's Pages section no longer tells agents to use `SiteHeader` and `SiteFooter`. The sites have no shared header or footer; it describes the chrome each page draws itself. No code changes.
+
 ## 0.11.0
 
 Brown text on cream.
