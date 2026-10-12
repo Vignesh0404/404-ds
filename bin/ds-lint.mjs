@@ -37,6 +37,45 @@ const RULES = [
     why: "Name the surface and use its tone: data-tone on the container, then bg-tone, text-on-tone, text-on-tone-muted, text-tone-accent, border-tone-border (CSS: var(--tone-bg), var(--tone-fg), …). A palette colour used directly drifts from the tone it was meant to match.",
   },
   {
+    id: "px-font-size",
+    test: /font-size:\s*[\d.]+px|\btext-\[[\d.]+px\]/,
+    why: "A px font size ignores the text-size setting. Use a role (text-micro, text-caption, text-body-sm, text-body; CSS var(--text-*)) or rem.",
+  },
+  {
+    id: "numeric-z-index",
+    test: /z-index:\s*(?!0\b|1\b|-1\b)\d+|(?:^|[\s"'`:!\[])z-(?:[1-9]\d*|\[)/,
+    why: "Use var(--z-raised | --z-popover | --z-controls | --z-toast | --z-sheet | --z-modal). 0, 1 and -1 are fine for local stacking.",
+  },
+  {
+    id: "px-radius",
+    test: /border-radius:[^;]*(?<![\w.-])[1-9][\d.]*px|\brounded(?:-[a-z]+)?-\[/,
+    why: "Use a radius token: rounded-card | panel | media | pill | control | device (CSS: var(--radius-*)).",
+  },
+  {
+    id: "literal-duration",
+    files: /\.css$/,
+    test: /(?<![\w.-])(?:0?\.\d+|[1-9]\d*(?:\.\d+)?)m?s\b/,
+    why: "Use var(--motion-instant | --motion-fast | --motion-sheet | --motion-drawer) with var(--motion-ease-out). A decorative loop is the exception: mark it ds-lint-ignore and say why.",
+  },
+  {
+    id: "literal-duration",
+    files: /\.tsx?$/,
+    test: /\bduration-(?!0\b)(?:\d+|\[)|\bease-\[|\bdelay-\[/,
+    why: "Use the motion tokens: duration-(--motion-fast), ease-(--motion-ease-reveal).",
+  },
+  {
+    id: "px-spacing",
+    files: /\.css$/,
+    test: /(?:padding|margin|gap|row-gap|column-gap)(?:-[a-z]+)?:[^;]*(?<![\w.-])(?:[2-9]|[1-9]\d+)(?:\.\d+)?px/,
+    why: "Use var(--space-1 … --space-6): a 4px grid in rem.",
+  },
+  {
+    id: "arbitrary-px",
+    files: /\.tsx?$/,
+    test: /-\[-?[\d.]+px\]/,
+    why: "An arbitrary px length escapes the scale and the text-size setting. Use a token (var(--size-*), var(--space-*)) or a Tailwind scale step.",
+  },
+  {
     id: "opacity-text",
     test: new RegExp(`(?:^|[\\s"'\`:])(?:placeholder:)?text-(?:${PALETTE})/\\d+`),
     why: "An opacity is not a text colour: it passes contrast on some surfaces and fails on others. Use text-on-tone-muted.",

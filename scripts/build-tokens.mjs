@@ -44,6 +44,7 @@ const themed = [
   ...declarations("text", "text-"),
   ...declarations("leading", "leading-"),
   ...declarations("tracking", "tracking-"),
+  ...declarations("shadow", "shadow-"),
 ];
 
 // Not Tailwind namespaces: these stay plain variables in both outputs.
@@ -51,6 +52,8 @@ const plain = [
   ...declarations("border", "border-"),
   ...declarations("motion", "motion-"),
   ...declarations("z", "z-"),
+  ...declarations("space", "space-"),
+  ...declarations("size", "size-"),
   // Multiplier form of the a11y text-size setting, for sizes that can't be
   // rem (404games' HUD is sized in container-query units). base.css sets it
   // per data-a11y-text value.

@@ -27,6 +27,16 @@ Read `node_modules/@the404labs/ds/DESIGN.md` before designing anything. It is th
 - A screen is one tone edge to edge; change tone only at a full-width section boundary.
 - Game art drawn on a canvas (`404games/src/games/`, `src/game/`) is exempt from all of this.
 
+## Lengths
+
+- Time: `var(--motion-instant | fast | sheet | drawer)` with `var(--motion-ease-out)`. Tailwind: `duration-(--motion-fast)`.
+- Stacking: `var(--z-raised | popover | controls | toast | sheet | modal)`. Tailwind: `z-(--z-controls)`. 0, 1 and -1 are fine for local stacking.
+- Radius: `rounded-card | panel | media | pill | control | device`, or `var(--radius-*)`.
+- Spacing in hand-written CSS: `var(--space-1 … --space-20)`, a 4px grid in rem. Tailwind sites use Tailwind's scale, which is the same grid.
+- Component sizes: `var(--size-control-sm | md | lg)`, `--size-form`, `--size-section`, `--size-hero`.
+- Never size text in px: the text-size setting doesn't reach it. Roles: `text-micro`, `text-caption`, `text-body-sm`, `text-body`, `text-title`.
+- A decorative loop (a marquee, a spin) may keep its own period: mark the line `ds-lint-ignore` and say why.
+
 ## Type
 
 - `var(--font-display)` (Tilt Warp) for headlines and scores, `var(--font-brand)` (Lilita One) for buttons, labels and prices, `var(--font-body)` (Inter) for everything else.
@@ -63,7 +73,7 @@ Read `node_modules/@the404labs/ds/CONTENT.md` before writing or changing any tex
 
 ## Checking your work
 
-- `npm run lint` runs `ds-lint`, which fails on raw colours, palette colours used outside a tone, opacity text colours, named typefaces and removed focus rings. Fix the cause; don't add `ds-lint-ignore` unless the line genuinely isn't UI, and say why in the comment.
+- `npm run lint` runs `ds-lint`, which fails on raw colours, palette colours used outside a tone, px font sizes, numeric z-indexes, literal radii, durations and px spacing, opacity text colours, named typefaces and removed focus rings. Fix the cause; don't add `ds-lint-ignore` unless the line genuinely isn't UI, and say why in the comment.
 - Check contrast and accessibility by reading computed values with the settings switched on (dyslexia font, XL text, reduced motion), not from a screenshot of the defaults. Two real bugs in this system were invisible in default screenshots.
 - A change to how a shared component looks or behaves belongs in `404-ds`, released as a new tag, then `npm run ds:update` in each site.
 

@@ -119,7 +119,7 @@ import { SiteFooter, SiteHeader, Wordmark } from "@the404labs/ds";
 
 | Script in the site | Runs | Does |
 | --- | --- | --- |
-| `"lint": "oxlint && ds-lint"` | `ds-lint` | Fails on raw colours, palette colours used outside a tone, opacity text colours, named typefaces and removed focus rings in `src/`. |
+| `"lint": "oxlint && ds-lint"` | `ds-lint` | Fails on raw colours, palette colours used outside a tone, px font sizes, numeric z-indexes, literal radii, durations and px spacing, opacity text colours, named typefaces and removed focus rings in `src/`. |
 | `"ds:update": "ds-update"` | `ds-update` | Moves the site to the newest tagged version. |
 | `"og": "ds-og 404shop"` | `ds-og` | Copies the site's social card to `public/og-image.png`. |
 

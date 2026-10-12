@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.9.0
+
+The rest of the numbers.
+
+- New tokens: `--text-micro` and `--text-body-sm`; `--radius-control` and `--radius-device`; `--shadow-raised` and `--shadow-overlay` (Tailwind `shadow-raised` / `shadow-overlay`); `--border-hairline`; `--space-1 … --space-20` (a 4px grid in rem: 1, 2, 3, 4, 5, 6, 8, 10, 14, 20); `--size-control-sm/md/lg`, `--size-form`, `--size-section`, `--size-hero`; `--z-popover`; `--motion-reveal`, `--motion-exit`, `--motion-hold` and `--motion-ease-reveal`.
+- `ds-lint` has six new rules: `px-font-size`, `numeric-z-index`, `px-radius`, `literal-duration`, `px-spacing` and `arbitrary-px`. A px font size ignores the text-size setting; the others are the same drift as raw colours, in lengths.
+- Why: the tokens for motion, z-index and radius already existed and 404games used none of them. It had 56 spacing values on 14 distinct px steps.
+- No pixels change in the package.
+
 ## 0.8.0
 
 One source for every surface.
