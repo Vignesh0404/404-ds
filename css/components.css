@@ -747,6 +747,36 @@
     accent-color: var(--tone-accent);
   }
 
+  /* --------------------------------------------------------------- Link
+     An inline link in running text. Underlined at rest, so it is never told
+     apart by colour alone; the underline turns wavy on hover and focus.
+     data-quiet drops the resting underline for a link that sits in a list or
+     a row (a cart line, a footer): nothing until hover, then the wave.
+     .ds-prose styles every link inside a block of text the same way. */
+  :is(.ds-link, .ds-prose a) {
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-thickness: var(--border-control);
+    text-underline-offset: 0.2em;
+    text-decoration-color: currentColor;
+  }
+
+  .ds-link[data-quiet] {
+    text-decoration-color: transparent;
+  }
+
+  @media (hover: hover) {
+    :is(.ds-link, .ds-prose a):hover {
+      text-decoration-style: wavy;
+      text-decoration-color: currentColor;
+    }
+  }
+
+  :is(.ds-link, .ds-prose a):focus-visible {
+    text-decoration-style: wavy;
+    text-decoration-color: currentColor;
+  }
+
   .ds-sr-only {
     position: absolute;
     width: 1px;

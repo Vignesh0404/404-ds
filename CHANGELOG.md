@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.10.0
+
+The wavy underline.
+
+- New `ds-link` class for an inline link: underlined at rest, wavy on hover and focus. `ds-link` with `data-quiet` has no underline until hover. `ds-prose` on a block of text does the same for every link inside it.
+- Taken from thefundaypress.com, which draws its links with `text-decoration: underline wavy 2px`.
+
 ## 0.9.1
 
 A tone for brown text on warm yellow.

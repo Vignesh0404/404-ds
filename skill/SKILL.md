@@ -37,6 +37,8 @@ Read `node_modules/@the404labs/ds/DESIGN.md` before designing anything. It is th
 - Never size text in px: the text-size setting doesn't reach it. Roles: `text-micro`, `text-caption`, `text-body-sm`, `text-body`, `text-title`.
 - A decorative loop (a marquee, a spin) may keep its own period: mark the line `ds-lint-ignore` and say why.
 
+- Inline links: `className="ds-link"` (wavy underline on hover); `data-quiet` for a link with no resting underline; `ds-prose` on a block of text styles every link in it. Don't restyle links with `underline` utilities.
+
 ## Type
 
 - `var(--font-display)` (Tilt Warp) for headlines and scores, `var(--font-brand)` (Lilita One) for buttons, labels and prices, `var(--font-body)` (Inter) for everything else.
