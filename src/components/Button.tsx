@@ -7,6 +7,7 @@ export type ButtonVariant =
   | "paper"
   | "cream"
   | "yellow"
+  | "yellow-warm"
   | "purple-light"
   | "red"
   | "green"

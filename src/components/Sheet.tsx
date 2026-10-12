@@ -10,7 +10,7 @@ const FOCUSABLE_SELECTOR =
 // long after `open` goes false so its exit transition can play.
 const EXIT_MS = { end: 220, left: 300 };
 
-export type SheetTone = "paper" | "cream" | "yellow" | "purple-light" | "red" | "green" | "blue" | "brown" | "purple" | "ink";
+export type SheetTone = "paper" | "cream" | "yellow" | "yellow-warm" | "purple-light" | "red" | "green" | "blue" | "brown" | "purple" | "ink";
 
 export type SheetProps = {
   open: boolean;

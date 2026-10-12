@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.1
+
+A tone for brown text on warm yellow.
+
+- New tone `yellow-warm` (and button variant): warm yellow surface, brown text, brown accent. It is the pairing the404labs's manifesto used before it moved to the plain `yellow` tone, whose text is ink.
+
 ## 0.9.0
 
 The rest of the numbers.

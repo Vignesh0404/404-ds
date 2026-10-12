@@ -19,7 +19,7 @@ Read `node_modules/@the404labs/ds/DESIGN.md` before designing anything. It is th
 
 ## Colour
 
-- A surface declares its tone: `data-tone="paper | cream | yellow | purple-light | red | green | blue | brown | purple | ink"`.
+- A surface declares its tone: `data-tone="paper | cream | yellow | yellow-warm | purple-light | red | green | blue | brown | purple | ink"`.
 - Inside it, use only the tone's values. CSS: `var(--tone-bg)`, `--tone-fg`, `--tone-fg-muted`, `--tone-accent`, `--tone-bg-hover`, `--tone-border`, `--tone-border-strong`, `--tone-field`, `--tone-focus`. Tailwind (studio and shop): `bg-tone`, `text-on-tone`, `text-on-tone-muted`, `text-tone-accent`, `bg-tone-hover`, `border-tone-border`, `border-tone-border-strong`, `bg-tone-field`.
 - Never use a palette colour directly (`bg-cream`, `text-ink`, `var(--color-red)`). Name the surface with `data-tone` and use the tone's values; `ds-lint` fails on it. The one exception is a product's own colour, which is data (the shop's colourways).
 - Never write a hex, `rgb()` or `hsl()` in UI code. For a translucent overlay use `color-mix(in srgb, var(--color-ink) 40%, transparent)`.

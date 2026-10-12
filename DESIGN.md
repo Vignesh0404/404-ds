@@ -58,7 +58,7 @@ Seventeen primitives. You rarely use them by name; you pick a **tone** and the t
 
 A tone is a surface plus everything that goes on it. Set `data-tone` on a container and use only the `--tone-*` variables inside it.
 
-Tones: `paper` (default), `cream`, `yellow`, `purple-light`, `red`, `green`, `blue`, `brown`, `purple`, `ink`.
+Tones: `paper` (default), `cream`, `yellow`, `yellow-warm` (brown text), `purple-light`, `red`, `green`, `blue`, `brown`, `purple`, `ink`.
 
 | Variable | Use |
 | --- | --- |
