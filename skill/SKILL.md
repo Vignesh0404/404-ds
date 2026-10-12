@@ -69,9 +69,11 @@ Read `node_modules/@the404labs/ds/CONTENT.md` before writing or changing any tex
 
 ## Pages
 
-- The header and footer are `SiteHeader` and `SiteFooter`. A page on a colour other than the site's default tells the header with `usePageTone("red")`.
-- Content that starts at the top of a page pads by `var(--ds-header-height)`.
-- Game pages in play have no shared header or footer.
+- The sites have no shared header or footer. `SiteHeader` and `SiteFooter` exist in the package but are not used; don't add them.
+- Each page draws its own chrome: the site wordmark top-left (`font-brand`, 1.25rem, 1.5rem from 640px, the tone's accent) and the controls top-right, both 40px tall and inset 16px, 24px from 640px, as on the other sites. Check the other two sites before changing either.
+- The footer is a bordered row of small uppercase links (`font-brand`, muted, accent on hover).
+- Content that starts at the top of a page clears the chrome with `var(--space-20)`.
+- Game pages in play have no chrome.
 
 ## Checking your work
 
