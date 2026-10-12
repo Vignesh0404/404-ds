@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.11.0
+
+Brown text on cream.
+
+- The `paper` and `cream` tones now set their text in brown (`#58332b`) instead of ink. Headlines keep the red accent; buttons on those surfaces take the new text colour for their outline and label. The `ink` button and the `ink` tone are unchanged.
+- Contrast: brown on paper is 10.20:1, on cream 9.36:1; muted text 5.78:1 and 5.47:1. All 88 tone pairs still pass WCAG AA.
+
 ## 0.10.0
 
 The wavy underline.

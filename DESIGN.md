@@ -34,7 +34,7 @@ Rules:
 
 - Clear space on every side equals the height of the "4".
 - Minimum wordmark height is 20px on screen.
-- Allowed pairs: red on paper, cream on red, cream on ink, yellow on red. Nothing else.
+- Allowed pairs: brown on paper, brown on cream, red on paper, cream on red, cream on ink, yellow on red. Nothing else.
 - Don't stretch, outline, add a shadow, tilt, or recolour it.
 
 ## Colour
@@ -58,7 +58,7 @@ Seventeen primitives. You rarely use them by name; you pick a **tone** and the t
 
 A tone is a surface plus everything that goes on it. Set `data-tone` on a container and use only the `--tone-*` variables inside it.
 
-Tones: `paper` (default), `cream`, `yellow`, `yellow-warm` (brown text), `purple-light`, `red`, `green`, `blue`, `brown`, `purple`, `ink`.
+Tones: `paper` (default, brown text), `cream` (brown text), `yellow`, `yellow-warm` (brown text), `purple-light`, `red`, `green`, `blue`, `brown`, `purple`, `ink`.
 
 | Variable | Use |
 | --- | --- |
@@ -117,7 +117,7 @@ No drop shadows as decoration. A shadow appears only on things that float above 
 
 ## Buttons
 
-There is one button. It is a pill with a 2px outline, labelled in Lilita One. The outline is the text colour of the surface the button sits on, not of the button: ink on a paper page, cream on a red hero or a green sheet. That keeps the outline visible whichever way the button is flipped.
+There is one button. It is a pill with a 2px outline, labelled in Lilita One. The outline is the text colour of the surface the button sits on, not of the button: brown on a paper page, cream on a red hero or a green sheet. That keeps the outline visible whichever way the button is flipped.
 
 - **Hover and focus: it flips.** The fill becomes the text colour and the label becomes the surface colour, in 100ms. Nothing moves and nothing gets a shadow.
 - **Press:** it settles to 98% scale.
