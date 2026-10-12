@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.0
+
+One source for every surface.
+
+- `ds-lint` has a new rule, `palette-colour`: it fails on a palette colour used directly in UI code (`bg-cream`, `text-ink`, `border-cream-soft/20`, `var(--color-red)`). A surface names its tone and everything on it reads the tone. A `color-mix()` of a palette variable for a translucent overlay is still allowed.
+- Why: the studio's "Good questions" section was `cream` while the shop's pages were `paper`, both written as a palette colour, so nothing could say they should match. DESIGN.md already says reading pages are paper.
+- This is a lint change only. No pixels change in the package.
+
 ## 0.7.0
 
 The words.

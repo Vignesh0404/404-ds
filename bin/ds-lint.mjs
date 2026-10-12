@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Fails if a site's UI code steps outside the design system: a raw colour, a
-// text colour made from an opacity, a typeface named directly, or a removed
-// focus ring. Each of those is how the three sites drifted apart, or failed
+// palette colour used directly instead of through a tone, a text colour made
+// from an opacity, a typeface named directly, or a removed focus ring. Each of those is how the three sites drifted apart, or failed
 // contrast, before the system existed.
 //
 //   "lint": "oxlint && ds-lint"
@@ -18,11 +18,23 @@ import { join, relative, sep } from "node:path";
 
 const PALETTE = "red|red-deep|yellow|yellow-warm|yellow-pale|cream|cream-soft|cream-light|green|green-light|blue|blue-deep|brown|purple|purple-light|ink|ink-soft";
 
+// Longest first, so `cream-soft` is not read as `cream` followed by `-soft`.
+const PALETTE_LONGEST_FIRST = PALETTE.split("|").sort((a, b) => b.length - a.length).join("|");
+const UTILITY = "bg|text|border(?:-[xytblrse])?|ring(?:-offset)?|fill|stroke|divide|outline|decoration|from|via|to|shadow|accent|caret";
+
 const RULES = [
   {
     id: "raw-colour",
     test: /#(?:[0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})\b|\b(?:rgba?|hsla?|oklch|oklab)\(/,
     why: "Use a token: var(--color-…), a --tone-* variable, or color-mix() of one.",
+  },
+  {
+    id: "palette-colour",
+    // `color-mix()` of a palette variable is the documented way to make a
+    // translucent overlay, so a line that has one is left alone.
+    skip: /color-mix\(/,
+    test: new RegExp(`(?:^|[\\s"'\`:!\\[])(?:${UTILITY})-(?:${PALETTE_LONGEST_FIRST})(?:/\\d+)?(?![\\w-])|var\\(--color-(?:${PALETTE_LONGEST_FIRST})\\)`),
+    why: "Name the surface and use its tone: data-tone on the container, then bg-tone, text-on-tone, text-on-tone-muted, text-tone-accent, border-tone-border (CSS: var(--tone-bg), var(--tone-fg), …). A palette colour used directly drifts from the tone it was meant to match.",
   },
   {
     id: "opacity-text",
@@ -84,6 +96,7 @@ for (const root of roots) {
       if (!src.trim() || /ds-lint-ignore/.test(line) || /ds-lint-ignore/.test(lines[i - 1] ?? "")) return;
       for (const rule of RULES) {
         if (rule.files && !rule.files.test(rel)) continue;
+        if (rule.skip && rule.skip.test(src)) continue;
         const match = src.match(rule.test);
         if (match) findings.push({ rel, line: i + 1, rule, text: match[0].trim() });
       }
